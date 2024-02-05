@@ -1,0 +1,9 @@
+SELECT TO_NUMBER(HOUR) AS HOUR, COUNT(HOUR) AS COUNT
+FROM (
+        SELECT TO_CHAR(DATETIME,'HH24') HOUR
+        FROM ANIMAL_OUTS
+        WHERE TO_CHAR(DATETIME,'HH24') between '09' and '19'
+     )
+GROUP BY HOUR 
+ORDER BY HOUR
+--결과는 똑같은데 틀린 경우: HOUR의 데이터타입을 문자형에서 숫자로 바꿔야 함
