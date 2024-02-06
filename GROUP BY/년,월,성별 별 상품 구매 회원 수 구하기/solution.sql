@@ -2,12 +2,8 @@ SELECT YEAR, TO_NUMBER(MONTH) as MONTH, GENDER, count(distinct a.USER_ID) as USE
 FROM USER_INFO a,
 (
     SELECT 
-    case when TO_CHAR(SALES_DATE, 'YYYY') like '2%' 
-                then  TO_CHAR(SALES_DATE, 'YYYY') 
-    end as YEAR
-    , case when TO_CHAR(SALES_DATE, 'MM') < '13' 
-                then  TO_CHAR(SALES_DATE, 'MM') 
-    end as MONTH
+    TO_CHAR(SALES_DATE, 'YYYY') as YEAR
+    , TO_CHAR(SALES_DATE, 'MM') as MONTH
     , USER_ID
     FROM ONLINE_SALE
 ) b
