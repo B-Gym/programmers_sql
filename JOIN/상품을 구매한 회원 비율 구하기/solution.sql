@@ -1,0 +1,28 @@
+SELECT 
+YEAR
+, TO_NUMBER(MONTH) as MONTH
+, count(distinct USER_ID) as PUCHASED_USERS
+, round(count(distinct USER_ID)/COUNT, 1) as PUCHASED_RATIO
+FROM
+(
+    SELECT 
+    a.USER_ID
+    , SALES_AMOUNT
+    , TO_CHAR(SALES_DATE, 'YYYY') as YEAR
+    , TO_CHAR(SALES_DATE, 'MM') as MONTH
+    FROM ONLINE_SALE a
+    inner join
+    (
+        SELECT USER_ID
+        FROM USER_INFO
+        WHERE TO_CHAR(JOINED, 'YYYY') like '2021'
+    ) b 
+    ON a.USER_ID = b.USER_ID
+), 
+(
+    SELECT count(USER_ID) as COUNT
+    FROM USER_INFO
+    WHERE TO_CHAR(JOINED, 'YYYY') like '2021'
+) "2021년 가입한 회원 수"
+GROUP BY YEAR, MONTH, COUNT
+ORDER BY YEAR, MONTH
